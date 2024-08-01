@@ -14,3 +14,14 @@ Content-Type: application/json
     "pinCode": "500156",
     "role": "Admin"
 }
+
+
+### LOGIN API
+
+POST http://localhost:3002/login
+Content-Type: application/json
+
+{
+    "username": "Abhilash",
+    "password": "abhi123"
+}
