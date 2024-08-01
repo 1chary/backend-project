@@ -1,2 +1,1 @@
-alter TABLE users 
-add role VARCHAR(100)
+create table session_management(id INT,name VARCHAR(200),logged_in_at VARCHAR(300))

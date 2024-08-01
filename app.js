@@ -77,6 +77,25 @@ app.post("/login", async(request,response) => {
             const payload = {
                 name: username
             }
+            const weekDays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
+            const dateAndTime = new Date();
+            const date = dateAndTime.getDate().toString()
+            const month = (dateAndTime.getMonth()+1).toString()
+            const year = dateAndTime.getFullYear().toString()
+            const dayNumber = dateAndTime.getDay()
+            const day = weekDays[dayNumber]
+            const logged_date = day + " "+date + "-" + month + "-" + year
+            const user_id = usernameAvailability.id;
+            const user_name = usernameAvailability.name;
+            const addSessionDate = `
+            INSERT INTO session_management(id,name,logged_in_at)
+            VALUES (
+                ${user_id},
+                '${user_name}',
+                '${logged_date}'
+            )
+            `
+            await db.run(addSessionDate);
             const jwtToken = jwt.sign(payload,"my_token")
             response.send(jwtToken)
         }
@@ -85,6 +104,33 @@ app.post("/login", async(request,response) => {
             response.send("Invalid Password")
         }
     }
+})
+
+// get the user 
+app.get("/data", async (request,response) => {
+    const getFromTable = `
+    SELECT *
+    FROM users
+    `
+    const resultData = await db.all(getFromTable);
+    response.send(resultData);
+})
+
+app.get("/sessions",async(request,response) => {
+    const getTheData = `
+    SELECT *
+    FROM session_management
+    `
+    const get = await db.all(getTheData)
+    response.send(get)
+})
+
+// FETCHING THE DATA BY USING OPEN WEATHER API  
+app.post("/weatherDetails",async(request,response) => {
+    const {userInput} = request.body;
+    const fetchingUrl = await fetch(`https://api.openweathermap.org/data/2.5/weather?units=metric&q=${userInput}&appid=2fe74895e927cbe81e92169f1a159f12`)
+    const responseData = await fetchingUrl.json()
+    response.send(responseData)
 })
 
 initializeDbAndServer()

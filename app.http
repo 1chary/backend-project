@@ -6,12 +6,12 @@ POST http://localhost:3002/Register
 Content-Type: application/json
 
 {
-    "username": "Abhilash",
-    "password": "abhi123",
-    "mobileNumber": "123456789",
-    "country": "India",
-    "city": "Hyderabad",
-    "pinCode": "500156",
+    "username": "Jose",
+    "password": "jose123",
+    "mobileNumber": "5678789879",
+    "country": "US",
+    "city": "San Jose",
+    "pinCode": "600071",
     "role": "Admin"
 }
 
@@ -24,4 +24,22 @@ Content-Type: application/json
 {
     "username": "Abhilash",
     "password": "abhi123"
+}
+
+
+### get the user data from the users table
+
+GET http://localhost:3002/data
+
+
+### get_sessions data from the sessions_management_table
+GET http://localhost:3002/sessions
+
+
+### get the data using open weather api 
+POST http://localhost:3002/weatherDetails
+Content-Type: application/json
+
+{
+    "userInput": "delhi"
 }
