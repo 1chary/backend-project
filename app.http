@@ -1,0 +1,16 @@
+
+
+
+### REGISTER FOR A NEW USER 
+POST http://localhost:3002/Register
+Content-Type: application/json
+
+{
+    "username": "Abhilash",
+    "password": "abhi123",
+    "mobileNumber": "123456789",
+    "country": "India",
+    "city": "Hyderabad",
+    "pinCode": "500156",
+    "role": "Admin"
+}
