@@ -37,6 +37,21 @@ Content-Type: application/json
 ### RETRIVE THE DATA API
 GET http://localhost:3002/events
 
+### UPDATE EVENT API
+PUT http://localhost:3002/events/1
+Content-Type: application/json
+
+{
+    "name": "Joe Root",
+    "date": "4-5-2023",
+    "location": "delhi",
+    "description": "Event updation process"
+}
+
+
+### DELETE EVENT API
+DELETE http://localhost:3002/events/3
+
 ### get_sessions data from the sessions table
 GET http://localhost:3002/sessions
 

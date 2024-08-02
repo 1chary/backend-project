@@ -150,6 +150,58 @@ app.get("/events",async(request,response) => {
     response.send(resultOfTheAboveQuery) 
 })
 
+// UPDATE EVENT ROUTE
+app.put("/events/:id",async(request,response) => {
+    const {id} = request.params
+    const {name,date,location,description} = request.body
+    const checkIdIsPresentInEventTable = `
+    SELECT *
+    FROM events
+    WHERE id = ${id}
+    `
+    const checkId = await db.get(checkIdIsPresentInEventTable)
+    if (checkId === undefined) {
+        response.status(400);
+        response.send("Event id does not exist")
+    }
+    else {
+        const updateEvent = `
+        UPDATE 
+            events
+        SET 
+            name = '${name}',
+            date = '${date}',
+            location = '${location}',
+            description = '${description}'
+        WHERE 
+            id = ${id}
+        `
+        await db.run(updateEvent)
+        response.send("Event updated Successfully")
+    }
+})
+
+// DELETE EVENT ROUTE
+app.delete("/events/:id", async(request,response) => {
+    const {id} = request.params;
+    const checkIdIsPresentInEventTable = `
+    SELECT *
+    FROM events
+    WHERE id = ${id}
+    `
+    const checkId = await db.get(checkIdIsPresentInEventTable)
+    if (checkId === undefined) {
+        response.status(400);
+        response.send("Event id does not exist")
+    }
+    else {
+        const deleteEvent = `DELETE FROM events WHERE id = ${id}`
+        await db.run(deleteEvent);
+        response.send("Event deleted successfully");
+    }
+})
+
+
 // FETCHING SESSIONS ROUTE
 app.get("/sessions",async(request,response) => {
     const query = `
