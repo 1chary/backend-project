@@ -37,9 +37,4 @@ GET http://localhost:3002/sessions
 
 
 ### get the data using open weather api 
-POST http://localhost:3002/weatherDetails
-Content-Type: application/json
-
-{
-    "userInput": "delhi"
-}
+GET http://localhost:3002/weatherDetails/new york
