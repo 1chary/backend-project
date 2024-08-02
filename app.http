@@ -1,6 +1,4 @@
 
-
-
 ### REGISTER FOR A NEW USER 
 POST http://localhost:3002/Register
 Content-Type: application/json
@@ -17,7 +15,6 @@ Content-Type: application/json
 
 
 ### LOGIN API
-
 POST http://localhost:3002/login
 Content-Type: application/json
 
@@ -26,13 +23,21 @@ Content-Type: application/json
     "password": "abhi123"
 }
 
+### CREATING A NEW EVENT
+POST http://localhost:3002/events
+Content-Type: application/json
 
-### get the user data from the users table
+{
+    "name": "Joe",
+    "date": "23-6-2021",
+    "location": "Germany",
+    "description": "Weather is the state of the atmosphere, including temperature, atmospheric pressure, wind, humidity, precipitation, and cloud cover. It differs from climate, which is all weather conditions for a particular location averaged over about 30 years"
+}
 
-GET http://localhost:3002/data
+### RETRIVE THE DATA API
+GET http://localhost:3002/events
 
-
-### get_sessions data from the sessions_management_table
+### get_sessions data from the sessions table
 GET http://localhost:3002/sessions
 
 

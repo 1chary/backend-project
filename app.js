@@ -26,7 +26,7 @@ const initializeDbAndServer = async () => {
         process.exit(1)
     }
 }
-
+// REGISTER ROUTE
 app.post("/Register", async(request,response) => {
     const {username,password,mobileNumber,country,city,pinCode,role} = request.body;
     const hashedPassword = await bcrypt.hash(password,10);
@@ -58,7 +58,7 @@ app.post("/Register", async(request,response) => {
     }
 })
 
-
+// LOGIN ROUTE
 app.post("/login", async(request,response) => {
     const {username,password} = request.body;
     const checkUsername = `
@@ -113,8 +113,44 @@ app.post("/login", async(request,response) => {
     }
 })
 
+// CREATE EVENT ROUTE
+app.post("/events", async(request,response) => {
+    const {name,date,location,description} = request.body;
+    const checkNameIsAvailableOrNot = `
+    SELECT *
+    FROM events
+    `
+    const nameAvailability = await db.get(checkNameIsAvailableOrNot)
+    if (nameAvailability === undefined) {
+        const addNewEventUser = `
+        INSERT INTO events(name,date,location,description)
+        values (
+            '${name}',
+            '${date}',
+            '${location}',
+            '${description}'
+        )
+        `
+        await db.run(addNewEventUser)
+        response.send("New user added to the events table")
+    }
+    else {
+        response.status(400);
+        response.send("Username already exists")
+    }
+})
 
-// FETCHING SESSIONS 
+// RETRIEVE ALL THE EVENTS ROUTE
+app.get("/events",async(request,response) => {
+    const retrieveAllTheEvents = `
+    SELECT *
+    FROM events
+    `
+    const resultOfTheAboveQuery = await db.all(retrieveAllTheEvents)
+    response.send(resultOfTheAboveQuery) 
+})
+
+// FETCHING SESSIONS ROUTE
 app.get("/sessions",async(request,response) => {
     const query = `
         SELECT *
@@ -124,7 +160,7 @@ app.get("/sessions",async(request,response) => {
     response.send(runQuery)
 })
 
-// FETCHING THE DATA BY USING OPEN WEATHER API  
+// FETCHING THE DATA BY USING OPEN WEATHER API  ROUTE
 app.get("/weatherDetails/:location",async(request,response) => {
     const {location} = request.params;
     const fetchingUrl = await fetch(`https://api.openweathermap.org/data/2.5/weather?units=metric&q=${location}&appid=2fe74895e927cbe81e92169f1a159f12`)
@@ -132,6 +168,5 @@ app.get("/weatherDetails/:location",async(request,response) => {
     response.send(responseData)
 })
 
-// Events data
 
 initializeDbAndServer()
