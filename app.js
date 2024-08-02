@@ -5,8 +5,10 @@ const bcrypt = require("bcrypt");
 const { open } = require("sqlite");
 const sqlite3 = require("sqlite3");
 const jwt = require("jsonwebtoken")
+const cors = require("cors")
 const bodyParser = require("body-parser")
 app.use(bodyParser.json());
+app.use(cors());
 
 const dbPath = path.join(__dirname,"userdata.db");
 let db = null

@@ -38,7 +38,7 @@ Content-Type: application/json
 GET http://localhost:3002/events
 
 ### UPDATE EVENT API
-PUT http://localhost:3002/events/1
+PUT http://localhost:3002/events/3
 Content-Type: application/json
 
 {
