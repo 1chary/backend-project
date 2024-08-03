@@ -1,0 +1,1 @@
+create table sessions(id INT, name VARCHAR(200), logged_at VARCHAR(150), ip_address VARCHAR(100))

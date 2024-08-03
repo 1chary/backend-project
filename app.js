@@ -66,8 +66,8 @@ app.post("/login", async(request,response) => {
     const checkUsername = `
     SELECT *
     FROM users
-    WHERE name = '${username}'
-    `
+    WHERE name = '${username}';
+    `;
     const usernameAvailability = await db.get(checkUsername)
     if (usernameAvailability === undefined) {
         response.status(400);
@@ -77,7 +77,7 @@ app.post("/login", async(request,response) => {
         const comparePassword = await bcrypt.compare(password,usernameAvailability.password);
         if (comparePassword === true) {
             const payload = {
-                name: username
+                name: username,
             }
             // GENERATING DATE, USER ID AND USER NAME
             const weekDays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
@@ -102,11 +102,11 @@ app.post("/login", async(request,response) => {
                 '${user_name}',
                 '${logged_date}',
                 '${convertingIpAddressToString}'
-            )
-            `
+            );
+            `;
             await db.run(addSession);
             const jwtToken = jwt.sign(payload,"my_token")
-            response.send(jwtToken)
+            response.send({jwtToken})
         }
         else {
             response.status(400);
