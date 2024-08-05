@@ -31,7 +31,8 @@ const initializeDbAndServer = async () => {
 // REGISTER ROUTE
 app.post("/Register", async(request,response) => {
     const {username,password,mobileNumber,country,city,pinCode,role} = request.body;
-    const hashedPassword = await bcrypt.hash(password,10);
+    const salt = await bcrypt.genSalt()
+    const hashedPassword = await bcrypt.hash(password,salt);
     const checkUsernameAvailability = `
     SELECT name
     FROM users
